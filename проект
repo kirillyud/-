@@ -1,0 +1,42 @@
+import math
+
+
+# Функция для вычисления местоположения спутника
+def calculate_satellite_location(time):
+    # на основе времени и других параметров
+    # Например, можно использовать модель движения Кеплера для спутников GPS
+
+    # Верните долготу, широту и высоту спутника
+    latitude = 5.5  # широта спутника
+    longitude = 15,3  # долгота спутника
+    altitude = 65,2  # высота спутника
+
+    return latitude, longitude, altitude
+
+
+# Функция для вычисления углов наведения антенн
+def calculate_antenna_directions(satellite_location, user_location):
+    # на основе местоположений спутника и пользователя
+
+    # Вычисляем разницу в координатах между спутником и пользователем
+    delta_latitude = satellite_location[0] - user_location[0]
+    delta_longitude = satellite_location[1] - user_location[1]
+
+    # Вычисляем расстояние между спутником и пользователем по формуле сферической геометрии
+    distance = math.sqrt(delta_latitude ** 2 + delta_longitude ** 2)
+
+    # Вычисляем углы наведения антенн при помощи тригонометрических функций
+    azimuth = math.atan2(delta_longitude, delta_latitude)
+    elevation = math.atan(satellite_location[2] / distance)
+
+    return azimuth, elevation
+
+
+# Пример использования
+current_time = 0.0  # Текущее время в секундах
+user_location = (55.7522, 37.6156)  # Местоположение пользователя (широта, долгота)
+
+satellite_location = calculate_satellite_location(current_time)
+azimuth, elevation = calculate_antenna_directions(satellite_location, user_location)
+
+print(f"Азимут: {azimuth} рад, Угол места: {elevation} рад")
